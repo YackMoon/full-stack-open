@@ -55,10 +55,15 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
-             <Filter filter={filter} handleFilerChange={handleFilerChange} />
+
+            <Filter filter={filter} handleFilerChange={handleFilerChange} />
+
             <h3>add a new</h3>
+
             <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
+
             <h3>Numbers</h3>
+
             <Persons persons={personsToShow} />
         </div>
     )
