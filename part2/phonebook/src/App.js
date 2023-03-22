@@ -13,10 +13,10 @@ const App = () => {
 
     useEffect(() => {
         personServices
-        .getAll()
-        .then(initialPersons => {
-            setPersons(initialPersons)
-        })
+            .getAll()
+            .then(initialPersons => {
+                setPersons(initialPersons)
+            })
     }, [])
 
     const addPerson = (event) => {
@@ -27,7 +27,16 @@ const App = () => {
         }
 
         if (persons.some(person => person.name === newName)) {
-            alert(`${newName} is already added to phonebook`)
+            if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+                const person = persons.find(p => p.name === newName)
+                personServices
+                    .update(person.id, personObject)
+                    .then(() => {
+                        setPersons(persons.map(p => p.number !== person.number ? p : personObject))
+                        setNewName('')
+                        setNewNumber('')
+                    })
+            }
         } else {
             personServices
                 .create(personObject)
@@ -79,7 +88,7 @@ const App = () => {
 
             <h3>Numbers</h3>
 
-            <Persons persons={personsToShow} toggleDeletePerson={toggleDeletePersonOf}/>
+            <Persons persons={personsToShow} toggleDeletePerson={toggleDeletePersonOf} />
         </div>
     )
 }
