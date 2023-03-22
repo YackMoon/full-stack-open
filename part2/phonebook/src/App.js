@@ -40,6 +40,17 @@ const App = () => {
         }
     }
 
+    const toggleDeletePersonOf = (id) => {
+        const person = persons.find(p => p.id === id)
+        if (window.confirm(`Delete ${person.name}?`)) {
+            personServices
+                .remove(id)
+                .then(() => {
+                    setPersons(persons.filter(p => p.id !== id))
+                })
+        }
+    }
+
     const handleNameChange = (event) => {
         setNewName(event.target.value)
     }
@@ -68,7 +79,7 @@ const App = () => {
 
             <h3>Numbers</h3>
 
-            <Persons persons={personsToShow} />
+            <Persons persons={personsToShow} toggleDeletePerson={toggleDeletePersonOf}/>
         </div>
     )
 }
